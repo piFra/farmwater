@@ -24,8 +24,14 @@ oscillator configurations. */
 void ConfigureOscillator(void)
 {
     /* TODO Add clock switching code if appropriate.  */
-
+    
     /* Typical actions in this function are to tweak the oscillator tuning
     register, select new clock sources, and to wait until new clock sources
     are stable before resuming execution of the main project. */
+    
+    // Use the 8MHz clock
+    OSCCONbits.IRCF = 0b111;
+
+    // Select the internal oscillator
+    OSCCONbits.SCS = 0b11;
 }
