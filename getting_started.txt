@@ -49,7 +49,7 @@ Add system level functions to system.h and system.c.  For example, if
 you want a function to determine the reset source of the device to know if you
 need to backup data, do an oscillator switch, enter a low power mode, etc...
 these types of functions may be added to system.c and prototypes can go in
-system.h.
+system.h
 
 STEP 5
 
