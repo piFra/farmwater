@@ -32,11 +32,29 @@ void InitApp(void)
     /* Setup analog functionality and port direction */
     
     // ======= ADC config =======
+    // Turn off ADC
+    ADCON0bits.ADON = 0;
+    
     // Use Vss as Vref-
     ADCON1bits.VCFG1 = 0;
     
     // Use Vdd as Vref+
     ADCON1bits.VCFG0 = 0;
+    
+    // Right justify the result
+    // www.settorezero.com/wordpress/contents/2010/03/convertitore_AD_04-giustificazione_risultato.gif
+    ADCON2bits.ADFM = 1;
+    //REMEMBER! To use the result, we must do this before:
+    // int value;
+    // value = ADRESL + (ADRESH << 8);
+    
+    // Use an acquisition time of 6 TAD
+    ADCON2bits.ACQT = 011;
+    
+    // Use an A/D clock that's 8TOSC, valid until 10MHz
+    // it's ok since we work at 8MHz
+    // page 267 datasheet of PIC18F4550
+    ADCON2bits.ADCS = 001;
     // ======= End ADC config =======
     
     // ======= PORTA config =======
