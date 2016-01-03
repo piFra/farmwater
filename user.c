@@ -30,6 +30,9 @@ void initADC(void)
     // ======= ADC config =======
     // Turn off ADC
     ADCON0bits.ADON = 0;
+
+    // Select AN0...AN3 as analog, the rest as digital
+    ADCON1bits.PCFG = 0b1011;
     
     // Use Vss as Vref-
     ADCON1bits.VCFG1 = 0;
@@ -58,23 +61,9 @@ void initADC(void)
 }
 
 void InitApp(void)
-{
-    /* TODO Initialize User Ports/Peripherals/Project here */
-    
-    /* Setup analog functionality and port direction */
-    
+{   
     initADC();
-    
-    // ======= PORTA config =======
-    // Set RA0...RA3 as digital input
-    TRISAbits.TRISA0 = 1;
-    TRISAbits.TRISA1 = 1;
-    TRISAbits.TRISA2 = 1;
-    TRISAbits.TRISA3 = 1;
-    
-    // Select AN0...AN3 as analog, the rest as digital
-    ADCON1bits.PCFG = 0b1011;
-    // ======= End PORTA config =======
+    initPORTS();
     
     /* Configure the IPEN bit (1=on) in RCON to turn on/off int priorities */
     
@@ -82,3 +71,45 @@ void InitApp(void)
     /* Enable interrupts */
 }
 
+void initPORTS(void)
+{
+    // ======= PORTA config =======
+    // Set RA0...RA3 as digital input
+    TRISAbits.TRISA0 = 1;
+    TRISAbits.TRISA1 = 1;
+    TRISAbits.TRISA2 = 1;
+    TRISAbits.TRISA3 = 1;
+    
+    // Set RA4..RA7 as input, even if they are not used 
+    TRISAbits.TRISA4 = 1;
+    TRISAbits.TRISA5 = 1;
+    TRISAbits.TRISA6 = 1;
+    // ======= End PORTA config =======
+    
+    // ======= PORTB config =======
+    // Set RB0...RB7 as input
+    TRISB = 0xFF;
+    // ======= End PORTB config =======
+
+    // ======= PORTD config =======
+    // Set RD0...RD7 as output
+    TRISD = 0x00;
+    // ======= End PORTD config =======
+
+    // ======= PORTE config =======
+    // Set RE0...RE2 as output even if RE2 is not used
+    TRISE = 0x00;
+    // ======= End PORTE config =======
+
+    // ======= PORTC config =======
+    // Set RC0...RC3 as output
+    TRISCbits.TRISC0 = 0;
+    TRISCbits.TRISC1 = 0;
+    TRISCbits.TRISC2 = 0;
+    TRISCbits.TRISC3 = 0;
+    
+    // RC6 and RC7 will also be configured as UART TX and UART RX in initUART()
+    TRISCbits.TRISC6 = 0;
+    TRISCbits.TRISC7 = 1;
+    // ======= End PORTC config =======
+}

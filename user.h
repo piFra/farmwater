@@ -12,4 +12,6 @@
 
 void initADC(void);         
 
+void initPORTS(void);
+
 void InitApp(void);         /* I/O and Peripheral Initialization */
