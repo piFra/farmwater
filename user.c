@@ -28,9 +28,29 @@
 void InitApp(void)
 {
     /* TODO Initialize User Ports/Peripherals/Project here */
-
+    
     /* Setup analog functionality and port direction */
-
+    
+    // ======= ADC config =======
+    // Use Vss as Vref-
+    ADCON1bits.VCFG1 = 0;
+    
+    // Use Vdd as Vref+
+    ADCON1bits.VCFG0 = 0;
+    // ======= End ADC config =======
+    
+    // ======= PORTA config =======
+    // Set RA0...RA3 as digital input
+    TRISAbits.TRISA0 = 1;
+    TRISAbits.TRISA1 = 1;
+    TRISAbits.TRISA2 = 1;
+    TRISAbits.TRISA3 = 1;
+    
+    // Select AN0...AN3 as analog, the rest as digital
+    ADCON1bits.PCFG = 0b1011;
+    // ======= End PORTA config =======
+    
+    
     /* Initialize peripherals */
 
     /* Configure the IPEN bit (1=on) in RCON to turn on/off int priorities */
