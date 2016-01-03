@@ -10,4 +10,6 @@
 
 /* TODO User level functions prototypes (i.e. InitApp) go here */
 
+void initADC(void);         
+
 void InitApp(void);         /* I/O and Peripheral Initialization */

@@ -25,12 +25,8 @@
 
 /* <Initialize variables in user.h and insert code for user algorithms.> */
 
-void InitApp(void)
+void initADC(void)
 {
-    /* TODO Initialize User Ports/Peripherals/Project here */
-    
-    /* Setup analog functionality and port direction */
-    
     // ======= ADC config =======
     // Turn off ADC
     ADCON0bits.ADON = 0;
@@ -49,13 +45,25 @@ void InitApp(void)
     // value = ADRESL + (ADRESH << 8);
     
     // Use an acquisition time of 6 TAD
-    ADCON2bits.ACQT = 011;
+    ADCON2bits.ACQT = 0b011;
     
     // Use an A/D clock that's 8TOSC, valid until 10MHz
     // it's ok since we work at 8MHz
     // page 267 datasheet of PIC18F4550
-    ADCON2bits.ADCS = 001;
+    ADCON2bits.ADCS = 0b001;
+    
+    // Turn on the ADC module
+    ADCON0bits.ADON = 1;
     // ======= End ADC config =======
+}
+
+void InitApp(void)
+{
+    /* TODO Initialize User Ports/Peripherals/Project here */
+    
+    /* Setup analog functionality and port direction */
+    
+    initADC();
     
     // ======= PORTA config =======
     // Set RA0...RA3 as digital input
@@ -68,11 +76,9 @@ void InitApp(void)
     ADCON1bits.PCFG = 0b1011;
     // ======= End PORTA config =======
     
-    
-    /* Initialize peripherals */
-
     /* Configure the IPEN bit (1=on) in RCON to turn on/off int priorities */
-
+    
+    
     /* Enable interrupts */
 }
 
