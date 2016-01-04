@@ -25,6 +25,49 @@
 
 /* <Initialize variables in user.h and insert code for user algorithms.> */
 
+void configInterrupts(void)
+{
+    // Disable all interrupts
+    INTCONbits.GIE = 0;
+    
+    // Disable peripheral interrupts too
+    INTCONbits.PEIE = 0;
+    
+    // Enable INT0 interrupts
+    INTCONbits.INT0E = 1;
+
+    // Enable TMR0 interrupts
+    INTCONbits.TMR0IE = 1;
+
+    // Enable RB Port change interrupt
+    INTCONbits.RBIE = 1;
+    
+    // Disable RB pullup resistors
+    INTCON2bits.RBPU = 1;
+    
+    // Enable the A/D interrupt
+    PIE1bits.ADIE = 1;
+    
+    // Enable the TMR1 interrupt
+    PIE1bits.TMR1IE = 1;
+    
+    // Enable the TMR3 interrupt
+    PIE2bits.TMR3IE = 1;
+    
+    // Disable interrupt priority
+    RCONbits.IPEN = 0;
+    
+    // Disable at ALL the WatchDog timer
+    // http://microchip.wikidot.com/8bit:wdt
+    WDTCONbits.SWDTEN = 0;
+
+    // Enable peripheral interrupts too
+    INTCONbits.PEIE = 1;
+    
+    // Enable all interrupts
+    INTCONbits.GIE = 1;
+}
+
 void initADC(void)
 {
     // ======= ADC config =======
@@ -62,9 +105,9 @@ void initADC(void)
 
 void InitApp(void)
 {   
-    initADC();
+    configInterrupts();
     initPORTS();
-    
+    initADC();
     /* Configure the IPEN bit (1=on) in RCON to turn on/off int priorities */
     
     

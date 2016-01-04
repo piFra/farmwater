@@ -10,6 +10,8 @@
 
 /* TODO User level functions prototypes (i.e. InitApp) go here */
 
+void configInterrupts(void);
+
 void initADC(void);         
 
 void initPORTS(void);
